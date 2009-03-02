@@ -101,6 +101,10 @@ module XcodeOutputParser
       end
     end
     
+    def success?
+      number_of_failures == 0
+    end
+    
     class TestSuite
       attr_reader :name
       attr_reader :started_at
@@ -121,7 +125,11 @@ module XcodeOutputParser
       end
       
       def number_of_failures
-        @test_cases.select { |tc| !tc.passed? }.length
+        failing_tests.length
+      end
+      
+      def failing_tests
+        @test_cases.select { |tc| !tc.passed? }
       end
     end
     
