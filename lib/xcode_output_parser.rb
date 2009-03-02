@@ -89,6 +89,18 @@ module XcodeOutputParser
       @test_suites = []
     end
     
+    def number_of_failures
+      @test_suites.inject(0) do |sum, test_suite|
+        sum + test_suite.number_of_failures
+      end
+    end
+    
+    def total_tests_run
+      @test_suites.inject(0) do |sum, test_suite|
+        sum + test_suite.test_cases.length
+      end
+    end
+    
     class TestSuite
       attr_reader :name
       attr_reader :started_at

@@ -110,6 +110,10 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
       assert_equal 1, @result.test_suites.length
     end
     
+    should "have a failed count of 0" do
+      assert_equal 0, @result.number_of_failures
+    end
+    
     context "and that sub test suite" do
       setup do
         @test_suite = @result.test_suites.first
@@ -164,6 +168,10 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
       assert_equal 1, @result.test_suites.length
     end
     
+    should "have a failed count of 0" do
+      assert_equal 1, @result.number_of_failures
+    end
+    
     context "and that sub test suite" do
       setup do
         @test_suite = @result.test_suites.first
@@ -196,4 +204,43 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
       end
     end
   end
+  
+  context "Parsed result from sample output file" do
+    setup do
+      @result = XcodeOutputParser::TestResultParser.open(File.join(File.dirname(__FILE__), *%w[example.output]))
+    end
+
+    should "have 5 test suites" do
+      assert_equal 5, @result.test_suites.length
+    end
+    
+    should "have 12 tests" do
+      assert_equal 12, @result.total_tests_run
+    end
+    
+    should "have 1 failure" do
+      assert_equal 1, @result.number_of_failures
+    end
+    
+    should "have an ArtistIndexingTest" do
+      assert @result.test_suites.map { |ts| ts.name }.include?('ArtistIndexingTest')
+    end
+    
+    should "have an SynchingTwoDevicesTest" do
+      assert @result.test_suites.map { |ts| ts.name }.include?('SynchingTwoDevicesTest')
+    end
+    
+    should "have an SenTestCase" do
+      assert @result.test_suites.map { |ts| ts.name }.include?('SenTestCase')
+    end
+    
+    should "have an SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest" do
+      assert @result.test_suites.map { |ts| ts.name }.include?('SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest')
+    end
+    
+    should "have an GTMTestCase" do
+      assert @result.test_suites.map { |ts| ts.name }.include?('GTMTestCase')
+    end
+  end
+  
 end
