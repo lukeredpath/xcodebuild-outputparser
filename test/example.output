@@ -1,0 +1,40 @@
+-- SNIP --
+
+Test Suite '/Users/luke/Projects/iphone/squeemote/build/Development-iphonesimulator/Testing.app' started at 2009-03-02 19:04:02 +0000
+Test Suite 'ArtistIndexingTest' started at 2009-03-02 19:04:02 +0000
+Test Case '-[ArtistIndexingTest testBasicIndexingByName]' passed (0.000 seconds).
+Test Case '-[ArtistIndexingTest testIndexingArtistsWhereNameIsOnlyAnArticle]' passed (0.000 seconds).
+Test Case '-[ArtistIndexingTest testIndexingArtistsWhereNameIsOnlyAnArticleWithTrailingSpace]' passed (0.000 seconds).
+Test Case '-[ArtistIndexingTest testIndexingWithIgnoredArticles]' passed (0.000 seconds).
+Test Case '-[ArtistIndexingTest testIndexingWithIgnoredArticlesAsSubstringsOfName]' passed (0.000 seconds).
+Test Suite 'ArtistIndexingTest' finished at 2009-03-02 19:04:02 +0000.
+Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+
+Test Suite 'SynchingTwoDevicesTest' started at 2009-03-02 19:04:02 +0000
+Test Case '-[SynchingTwoDevicesTest testShouldIndicateDeviceOneIsSynched]' passed (0.000 seconds).
+Test Case '-[SynchingTwoDevicesTest testShouldIndicateDeviceOneIsSynchedWithDeviceTwo]' passed (0.000 seconds).
+Test Case '-[SynchingTwoDevicesTest testShouldIndicateDeviceTwoIsSynched]' passed (0.000 seconds).
+Test Case '-[SynchingTwoDevicesTest testShouldIndicateDeviceTwoIsSynchedWithDeviceOne]' passed (0.000 seconds).
+Test Suite 'SynchingTwoDevicesTest' finished at 2009-03-02 19:04:02 +0000.
+Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+
+Test Suite 'SenTestCase' started at 2009-03-02 19:04:02 +0000
+Test Suite 'SenTestCase' finished at 2009-03-02 19:04:02 +0000.
+Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+
+Test Suite 'SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest' started at 2009-03-02 19:04:02 +0000
+/Users/luke/Projects/iphone/squeemote/DeviceSynchingTest.m:92: error: -[SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest testShouldIndicateDeviceOneIsNotSynched] : '[deviceOne isSynched]' should be TRUE. 
+Test Case '-[SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest testShouldIndicateDeviceOneIsNotSynched]' failed (0.000 seconds).
+Test Case '-[SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest testShouldIndicateDeviceThreeIsSynchedWithDeviceTwo]' passed (0.000 seconds).
+Test Case '-[SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest testShouldIndicateDeviceTwoIsSynchedWithDeviceThree]' passed (0.000 seconds).
+Test Suite 'SynchingUnsynchedDeviceWithDeviceInAnotherSyncGroupTest' finished at 2009-03-02 19:04:02 +0000.
+Executed 3 tests, with 1 failures (1 unexpected) in 0.001 (0.001) seconds
+
+Test Suite 'GTMTestCase' started at 2009-03-02 19:04:02 +0000
+Test Suite 'GTMTestCase' finished at 2009-03-02 19:04:02 +0000.
+Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+
+Test Suite '/Users/luke/Projects/iphone/squeemote/build/Development-iphonesimulator/Testing.app' finished at 2009-03-02 19:04:02 +0000.
+Executed 12 tests, with 1 failures (1 unexpected) in 0.006 (0.006) seconds
+
+-- SNIP --
