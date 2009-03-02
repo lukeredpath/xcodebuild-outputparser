@@ -2,23 +2,36 @@ require 'time'
 
 module XcodeOutputParser
   class TestResultParser
+    def self.open(path)
+      result = nil
+      File.open(path) do |io|
+        parser = self.new
+        result = parser.parse_output(io.read)
+      end
+      result
+    end
+
     def parse_output(test_output)
       start_parsing!
       test_output.split("\n").each do |line|
-        if line =~ /Test Suite(.*)started/
+        if line.strip =~ /^Test Suite(.*)started/
           if @current_result.main_test_suite
             start_test_suite(line)
           else
             start_main_test_suite(line)
           end
         end
-        if line =~ /Test Suite(.*)finished/
+        if line.strip =~ /^Test Suite(.*)finished/
           if @current_test_suite
             finish_test_suite(line)
           else
             finish_main_test_suite(line)
           end
         end
+        if line.strip =~ /^Test Case/
+          parse_test_case(line)
+        end
+        @previous_line = line
       end
       @current_result
     end
@@ -55,6 +68,17 @@ module XcodeOutputParser
       @current_test_suite.finish(finished_at)
       @current_test_suite = nil
     end
+    
+    def parse_test_case(line)
+      test_name = line.match(/'.*\stest(.*)\]'/)[1]
+      if line.match(/passed/)
+        test_case = TestResult::TestCase.new(test_name, true)
+      elsif line.match(/failed/)
+        test_case = TestResult::TestCase.new(test_name, false)
+        test_case.failure_message = @previous_line.strip
+      end
+      @current_test_suite.test_cases << test_case
+    end
   end
   
   class TestResult
@@ -69,9 +93,11 @@ module XcodeOutputParser
       attr_reader :name
       attr_reader :started_at
       attr_reader :finished_at
+      attr_reader :test_cases
       
       def initialize(name)
         @name = name
+        @test_cases = []
       end
       
       def start(start_time)
@@ -80,6 +106,24 @@ module XcodeOutputParser
       
       def finish(finish_time)
         @finished_at = finish_time
+      end
+      
+      def number_of_failures
+        @test_cases.select { |tc| !tc.passed? }.length
+      end
+    end
+    
+    class TestCase
+      attr_reader :name
+      attr_accessor :failure_message
+      
+      def initialize(name, did_pass)
+        @name = name
+        @did_pass = did_pass
+      end
+      
+      def passed?
+        @did_pass
       end
     end
   end
