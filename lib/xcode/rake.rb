@@ -1,7 +1,6 @@
 require 'rake'
 require 'rake/tasklib'
-require File.join(File.dirname(__FILE__), *%w[.. xcode_output_parser])
-require File.join(File.dirname(__FILE__), *%w[live_output_delegate])
+require File.join(File.dirname(__FILE__), *%w[build_parser])
 
 module Xcode
   module Rake
@@ -40,7 +39,7 @@ module Xcode
       def define
         task name do
           parser_delegate = Xcode::BuildParser::LiveOutputDelegate.new
-          parser = XcodeOutputParser::TestResultParser.new(parser_delegate)
+          parser = Xcode::BuildParser::UnitTestParser.new(parser_delegate)
           parser.parse_output_from_command(command_string)
           parser_delegate.failures.length == 0
         end

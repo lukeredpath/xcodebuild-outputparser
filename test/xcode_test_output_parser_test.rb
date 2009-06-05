@@ -4,7 +4,7 @@ require 'shoulda'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), *%w[.. lib]))
 
-require 'xcode_output_parser'
+require 'xcode/build_parser'
 
 class XcodeTestOutputParserTest < Test::Unit::TestCase
   
@@ -16,11 +16,11 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
         Executed 0 tests, with 0 failures (0 unexpected) in 0.00 (0.00) seconds
       TESTOUTPUT
       
-      @parser = XcodeOutputParser::TestResultParser.new
+      @parser = Xcode::BuildParser::UnitTestParser.new
     end
 
     should "return a TestResult" do
-      assert_instance_of XcodeOutputParser::TestResult, @parser.parse_output(@test_output)
+      assert_instance_of Xcode::BuildParser::TestResult, @parser.parse_output(@test_output)
     end
     
     context "and that result" do
@@ -55,7 +55,7 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
         Executed 0 tests, with 0 failures (0 unexpected) in 0.00 (0.00) seconds
       TESTOUTPUT
 
-      @result = XcodeOutputParser::TestResultParser.new.parse_output(test_output)
+      @result = Xcode::BuildParser::UnitTestParser.new.parse_output(test_output)
     end
 
     should "contain the main test suite" do
@@ -99,7 +99,7 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
         Executed 0 tests, with 0 failures (0 unexpected) in 0.00 (0.00) seconds
       TESTOUTPUT
 
-      @result = XcodeOutputParser::TestResultParser.new.parse_output(test_output)
+      @result = Xcode::BuildParser::UnitTestParser.new.parse_output(test_output)
     end
     
     should "contain the main test suite" do
@@ -157,7 +157,7 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
         Executed 0 tests, with 0 failures (0 unexpected) in 0.00 (0.00) seconds
       TESTOUTPUT
 
-      @result = XcodeOutputParser::TestResultParser.new.parse_output(test_output)
+      @result = Xcode::BuildParser::UnitTestParser.new.parse_output(test_output)
     end
     
     should "contain the main test suite" do
@@ -207,7 +207,7 @@ class XcodeTestOutputParserTest < Test::Unit::TestCase
   
   context "Parsed result from sample output file" do
     setup do
-      @result = XcodeOutputParser::TestResultParser.open(File.join(File.dirname(__FILE__), *%w[example.output]))
+      @result = Xcode::BuildParser::UnitTestParser.open(File.join(File.dirname(__FILE__), *%w[example.output]))
     end
 
     should "have 5 test suites" do
